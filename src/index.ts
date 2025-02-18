@@ -20,7 +20,7 @@ export default {
   bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {
     const io = new Server(strapi.server.httpServer, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: ["http://localhost:3000", "https://ayna-chat-tn.vercel.app"],
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"],
         credentials: true,
@@ -81,95 +81,4 @@ export default {
     })
   })
 }
-
-
-
-  //   });
-  // },
-  // bootstrap() {
-  //   const io = new Server(strapi.server.httpServer, {
-  //     cors: {
-  //       origin: "http://localhost:3000",
-  //       methods: ["GET", "POST"],
-  //       allowedHeaders: ["my-custom-header"],
-  //       credentials: true,
-  //     },
-  //   });
-
-  //   io.on("connection", (socket) => {
-  //     console.log("New user connected");
-
-  //     socket.on("joinSession", async ({ sessionId }) => {
-  //       socket.join(sessionId);
-  //       console.log(`User joined session: ${sessionId}`);
-
-  //       try {
-  //         // Fetch previous messages for the session from Strapi
-  //         const response = await axios.get(
-  //           `http://localhost:1337/api/messages?filters[session][$eq]=${sessionId}&sort=createdAt:asc`
-  //         );
-
-  //         const previousMessages = response.data.data.map((msg) => ({
-  //           id: msg.id,
-  //           session: msg.attributes.session,
-  //           content: msg.attributes.content,
-  //           role: msg.attributes.role,
-  //         }));
-
-  //         // Send previous messages to the user who joined
-  //         socket.emit("previousMessages", previousMessages);
-  //       } catch (error) {
-  //         console.error("Error fetching previous messages:", error.message);
-  //       }
-  //     });
-
-  //     socket.on("sendMessage", async (data) => {
-  //       console.log("Received message:", data);
-
-  //       try {
-  //         const userMessage = {
-  //           data: {
-  //             session: data.session,
-  //             content: data.content,
-  //             role: "user",
-  //           },
-  //         };
-
-  //         // Save user's message in the database
-  //         const savedUserMessage = await axios.post(
-  //           "http://localhost:1337/api/messages",
-  //           userMessage
-  //         );
-
-  //         // Broadcast the user's message to the chat room
-  //         io.to(data.session).emit("receiveMessage", savedUserMessage.data.data);
-
-  //         // Simulating assistant response (replace with AI logic if needed)
-  //         const assistantResponse = `I received: "${data.content}"`; // Example: Replace with actual AI processing
-
-  //         const assistantMessage = {
-  //           data: {
-  //             session: data.session,
-  //             content: assistantResponse,
-  //             role: "assistant",
-  //           },
-  //         };
-
-  //         // Save assistant's response in the database
-  //         const savedAssistantMessage = await axios.post(
-  //           "http://localhost:1337/api/messages",
-  //           assistantMessage
-  //         );
-
-  //         // Send assistant's message back to the user
-  //         io.to(data.session).emit("receiveMessage", savedAssistantMessage.data.data);
-  //       } catch (error) {
-  //         console.error("Error processing message:", error.message);
-  //       }
-  //     });
-
-  //     socket.on("disconnect", () => {
-  //       console.log("User disconnected");
-  //     });
-  //   });
 }
