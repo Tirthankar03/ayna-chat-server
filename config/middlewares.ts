@@ -10,14 +10,14 @@ export default [
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
       credentials: true,
     },
-  },
+  },  
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',
   {
     name: 'strapi::session',
     config: {
-      secure: process.env.OVERRIDE_COOKIE_SECURE === 'true' ? true : false,
+      secure: 'true',
       sameSite: 'none',
       httpOnly: true,
     },
