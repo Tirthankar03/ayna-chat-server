@@ -17,7 +17,7 @@ export default [
   {
     name: 'strapi::session',
     config: {
-      secure: true,
+      secure: process.env.OVERRIDE_COOKIE_SECURE === 'true' ? true : false,
       sameSite: 'none',
       httpOnly: true,
     },
